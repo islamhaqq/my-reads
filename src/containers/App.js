@@ -6,6 +6,10 @@ import SearchPage from './SearchPage';
 
 import '../assets/styles/App.css';
 
+/**
+ * Root component.
+ * @extends Component
+ */
 class App extends Component {
   render() {
     return (
