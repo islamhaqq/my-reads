@@ -15,3 +15,5 @@ class BookShelf extends Component {
     return <Header />;
   }
 }
+
+export default BookShelf;
