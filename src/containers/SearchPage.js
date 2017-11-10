@@ -15,3 +15,5 @@ class SearchPage extends Component {
     return <SearchBar />;
   }
 }
+
+export default SearchPage;
