@@ -16,8 +16,7 @@ const Book = props => (
         style={{
           width: 128,
           height: 193,
-          backgroundImage:
-            {`url("${props.coverImageSource}")`},
+          backgroundImage: `url(${props.coverImageSource})`,
         }}
       />
 
