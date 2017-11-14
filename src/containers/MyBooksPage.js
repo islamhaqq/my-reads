@@ -9,7 +9,7 @@ import NewBookFAB from '../components/NewBookFAB';
  * and "Read."
  * @extends Component
  */
-class BookShelf extends Component {
+class MyBooksPage extends Component {
   state = {};
 
   render() {
@@ -270,4 +270,4 @@ class BookShelf extends Component {
   }
 }
 
-export default BookShelf;
+export default MyBooksPage;
