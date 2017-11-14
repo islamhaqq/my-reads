@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 import BookShelf from '../components/BookShelf';
 import NewBookFAB from '../components/NewBookFAB';
+import { getAll } from '../lib/services/booksAPI';
 
 /**
  * A top-level stateful component that serves as the home page of the app.
@@ -11,7 +12,36 @@ import NewBookFAB from '../components/NewBookFAB';
  * @extends Component
  */
 class MyBooksPage extends Component {
-  state = {};
+  /**
+   * The "My Books" page's state. Contains book data.
+   * @type {Object}
+   */
+  state = {
+    /**
+     * All the books in the users book shelf.
+     * @type {Array}
+     */
+    books: [],
+  };
+
+  async componentDidMount() {
+    // fetch all books from API
+    const allBooks = await getAll();
+
+    // update state with all the user's books, distilled from unused data that
+    // will take up extra memory
+    allBooks.map(book => {
+      const { title, authors, imageLinks } = book;
+
+      this.setState(currentState => {
+        currentState.books.push({
+          title,
+          authors,
+          coverImage: imageLinks.thumbnail,
+        });
+      });
+    });
+  }
 
   render() {
     return (
