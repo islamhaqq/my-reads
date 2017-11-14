@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Book from './Book';
 
@@ -34,5 +35,22 @@ const BookShelf = props => (
     </div>
   </div>
 );
+
+/**
+ * Validation for all the props that this component accepts.
+ * @type {Object}
+ */
+BookShelf.propTypes = {
+  /**
+   * The header or name of the book shelf.
+   * @type {String}
+   */
+  title: PropTypes.string.isRequired,
+  /**
+   * All the books in this book shelf.
+   * @type {Array}
+   */
+  books: PropTypes.array.isRequired,
+};
 
 export default BookShelf;
