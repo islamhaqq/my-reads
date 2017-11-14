@@ -8,7 +8,7 @@ import React from 'react';
 const Book = props => (
   <div>
     {/* Book cover photo. */}
-    <img />
+    <img src={props.book.coverPhotoSource} />
 
     {/* Book description. */}
     <div>
