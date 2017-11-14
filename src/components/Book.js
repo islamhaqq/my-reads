@@ -6,15 +6,37 @@ import React from 'react';
  * @param  {Object} props - A book object and its data (title, author, etc.)
  */
 const Book = props => (
-  <div>
-    {/* Book cover photo. */}
-    <img src={props.book.coverPhotoSource} />
+  <div className="book">
+    {/* Book preview. */}
+    <div className="book-top">
+      {/* Book cover. */}
+      <div
+        className="book-cover"
+        style={{
+          width: 128,
+          height: 193,
+          backgroundImage:
+            {`url("${props.coverImageSource}")`},
+        }}
+      />
+
+      {/* Book actions. */}
+      <div className="book-shelf-changer">
+        <select>
+          <option value="none" disabled>
+            Move to...
+          </option>
+          <option value="currentlyReading">Currently Reading</option>
+          <option value="wantToRead">Want to Read</option>
+          <option value="read">Read</option>
+          <option value="none">None</option>
+        </select>
+      </div>
+    </div>
 
     {/* Book description. */}
-    <div>
-      <p>{props.book.title}</p>
-      <p>{props.book.author}</p>
-    </div>
+    <div className="book-title">{props.title}</div>
+    <div className="book-authors">{props.author}</div>
   </div>
 );
 
