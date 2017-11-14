@@ -37,7 +37,7 @@ class MyBooksPage extends Component {
         currentState.books.push({
           title,
           authors,
-          coverImage: imageLinks.thumbnail,
+          coverImageSource: imageLinks.thumbnail,
         });
       });
     });
