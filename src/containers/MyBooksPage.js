@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import Header from '../components/Header';
 import BookShelf from '../components/BookShelf';
-import NewBookFAB from '../components/NewBookFAB';
 import { getAll } from '../lib/services/booksAPI';
 
 /**
