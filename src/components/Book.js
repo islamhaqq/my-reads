@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Displays a book; its cover, description, and actions.
@@ -39,5 +40,27 @@ const Book = props => (
     <div className="book-authors">{props.author}</div>
   </div>
 );
+
+/**
+ * The props this component accepts to fully render a book.
+ * @type {Object}
+ */
+Book.propTypes = {
+  /**
+   * The image link of the book's cover.
+   * @type {String}
+   */
+  coverImageSource: PropTypes.string.isRequired,
+  /**
+   * The title of the book.
+   * @type {String}
+   */
+  title: PropTypes.string.isRequired,
+  /**
+   * The author of the book.
+   * @type {String}
+   */
+  author: PropTypes.string.isRequired
+}
 
 export default Book;
