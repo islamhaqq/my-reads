@@ -6,8 +6,8 @@ import React from 'react';
  * @method Header
  */
 const Header = () => (
-  <div>
-    <h1>My Reads</h1>
+  <div className="list-books-title">
+    <h1>MyReads</h1>
   </div>
 );
 
