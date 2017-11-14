@@ -59,7 +59,7 @@ Book.propTypes = {
    * The author of the book.
    * @type {String}
    */
-  author: PropTypes.string.isRequired
-}
+  author: PropTypes.string.isRequired,
+};
 
 export default Book;
