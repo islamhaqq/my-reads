@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
  * a floating action button with a drop shadow and elevation.
  * @method NewBookFAB
  */
-const NewBookFAB = props => (
+const NewBookFAB = () => (
   // navigate user to search page on click
   <Link to="/search">
     <button />
