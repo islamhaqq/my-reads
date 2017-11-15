@@ -51,7 +51,7 @@ class MyBooksPage extends Component {
         {/* Main content. */}
         <div className="list-books-content">
           <div>
-            <BookShelf title="Currently Reading" />
+            <BookShelf books={this.state.books} title="Currently Reading" />
             <div className="bookshelf">
               <h2 className="bookshelf-title">Want to Read</h2>
               <div className="bookshelf-books">
