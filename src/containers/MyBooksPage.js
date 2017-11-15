@@ -16,6 +16,7 @@ class MyBooksPage extends Component {
    * @type {Object}
    */
   state = {
+    isLoading: true,
     /**
      * All the books in the users book shelf.
      * @type {Array}
@@ -38,11 +39,13 @@ class MyBooksPage extends Component {
           authors,
           coverImageSource: imageLinks.thumbnail,
         });
+        currentState.isLoading = false;
       });
     });
   }
 
   render() {
+    if (this.state.isLoading) return <h1>Loading...</h1>;
     return (
       <div className="list-books">
         {/* Name/header of the app. */}
