@@ -18,12 +18,11 @@ const BookShelf = props => (
     <div className="bookshelf-books">
       <ol className="books-grid">
         {props.books.map(book => (
-          <li>
+          <li key={book.title}>
             <Book
               coverImageSource={book.coverImageSource}
               title={book.title}
               author={book.authors[0]}
-              key={book.title}
             />
           </li>
         ))}
