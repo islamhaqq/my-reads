@@ -39,13 +39,16 @@ class MyBooksPage extends Component {
           authors,
           coverImageSource: imageLinks.thumbnail,
         });
-        currentState.isLoading = false;
       });
     });
+
+    // indicate all essential-data promises are resolved
+    this.setState({ isLoading: false });
   }
 
   render() {
     if (this.state.isLoading) return <h1>Loading...</h1>;
+
     return (
       <div className="list-books">
         {/* Name/header of the app. */}
@@ -55,6 +58,7 @@ class MyBooksPage extends Component {
         <div className="list-books-content">
           <div>
             <BookShelf books={this.state.books} title="Currently Reading" />
+
             <div className="bookshelf">
               <h2 className="bookshelf-title">Want to Read</h2>
               <div className="bookshelf-books">
