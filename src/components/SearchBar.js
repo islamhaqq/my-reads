@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const SearchBar = props => (
   <div className="search-books-bar">
     {/* Back button that navigates user back to bookshelf page. */}
-    <Link to="/search" className="close-search">
+    <Link to="/" className="close-search">
       Close
     </Link>
 
