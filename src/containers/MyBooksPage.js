@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import Header from '../components/Header';
 import BookShelf from '../components/BookShelf';
@@ -83,9 +84,7 @@ class MyBooksPage extends Component {
 
         {/* Navigates user to the search page. */}
         <div className="open-search">
-          <a onClick={() => this.setState({ showSearchPage: true })}>
-            Add a book
-          </a>
+          <Link to="/search">Add a book</Link>
         </div>
       </div>
     );
