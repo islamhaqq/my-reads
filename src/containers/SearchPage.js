@@ -22,6 +22,7 @@ class SearchPage extends Component {
   };
 
   componentDidMount() {
+    // optimization: limit AJAX calls as much as possible when user is querying
     _.debounce(this.getSearchResults, 1000);
   }
 
