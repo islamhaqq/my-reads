@@ -3,14 +3,19 @@ import PropTypes from 'prop-types';
 
 import Book from './Book';
 
-const BooksGrid = props => {
-  console.log(props.books);
+/**
+ * Simple renders a grid of books.
+ * @method BooksGrid
+ * @param  {Array} books - The books to display.
+ */
+const BooksGrid = ({ books }) => {
+  console.log(books);
 
   return (
     <div className="search-books-results">
       <ol className="books-grid">
-        {props.books.length ? (
-          props.books.map(book => (
+        {books.length ? (
+          books.map(book => (
             <li key={book.id}>
               <Book
                 coverImageSource={
