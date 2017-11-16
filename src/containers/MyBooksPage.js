@@ -18,10 +18,20 @@ class MyBooksPage extends Component {
   state = {
     isLoading: true,
     /**
-     * All the books in the users book shelf.
+     * All the books in the user's book shelf that he is currently reading.
      * @type {Array}
      */
-    books: [],
+    currentlyReading: [],
+    /**
+     * All the books in the user's book shelf that he wants to read reading.
+     * @type {Array}
+     */
+    wantToRead: [],
+    /**
+     * All the books in the user's book shelf that he has already read.
+     * @type {Array}
+     */
+    read: [],
   };
 
   async componentDidMount() {
@@ -31,10 +41,10 @@ class MyBooksPage extends Component {
     // update state with all the user's books, distilled from unused data that
     // will take up extra memory
     allBooks.map(book => {
-      const { title, authors, imageLinks } = book;
+      const { shelf, title, authors, imageLinks } = book;
 
       this.setState(currentState => {
-        currentState.books.push({
+        currentState[book.shelf].push({
           title,
           authors,
           coverImageSource: imageLinks.thumbnail,
@@ -57,7 +67,10 @@ class MyBooksPage extends Component {
         {/* Main content. */}
         <div className="list-books-content">
           <div>
-            <BookShelf books={this.state.books} title="Currently Reading" />
+            <BookShelf
+              books={this.state.currentlyReading}
+              title="Currently Reading"
+            />
 
             <div className="bookshelf">
               <h2 className="bookshelf-title">Want to Read</h2>
