@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import SearchBar from '../components/SearchBar';
+import { search } from '../lib/services/booksAPI';
 
 /**
  * A top-level stateful component that serves as the search page of the app.
@@ -15,6 +16,7 @@ class SearchPage extends Component {
      * @type {String}
      */
     searchQuery: '',
+    searchResults: null,
   };
 
   /**
@@ -24,9 +26,27 @@ class SearchPage extends Component {
    * @param  {Object} event - Native DOM event.
    * @return {Void}
    */
-  updateSearchQuery = event => {
+  updateSearchQuery = async event => {
     this.setState({
       searchQuery: event.target.value,
+    });
+
+    // fetch the books according to the user's query
+    await this.getSearchResults();
+  };
+
+  /**
+   * Fetches the books matching the user's search query.
+   * @method getSearchResults
+   * @return {Void)
+   */
+  getSearchResults = async () => {
+    // make AJAX call to the API
+    const results = await search(this.state.searchQuery, 10);
+
+    // update the state to reflect the results
+    this.setState({
+      searchResults: results,
     });
   };
 
