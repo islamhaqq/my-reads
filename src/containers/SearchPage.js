@@ -22,8 +22,7 @@ class SearchPage extends Component {
   };
 
   componentDidMount() {
-    // debounce the AJAX call
-    _.debounce(this.getSearchResults, 10000);
+    _.debounce(this.getSearchResults, 1000);
   }
 
   /**
@@ -56,21 +55,19 @@ class SearchPage extends Component {
    * @return {Void)
    */
   getSearchResults = async () => {
-    await setTimeout(async () => {
-      try {
-        // make AJAX call to the API
-        let results = await search(this.state.searchQuery, 10);
+    try {
+      // make AJAX call to the API
+      let results = await search(this.state.searchQuery, 10);
 
-        // if (!results) results = [];
+      // if (!results) results = [];
 
-        // update the state to reflect the results
-        this.setState({
-          searchResults: results,
-        });
-      } catch (error) {
-        throw new Error(error);
-      }
-    }, 1000);
+      // update the state to reflect the results
+      this.setState({
+        searchResults: results,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   render() {
