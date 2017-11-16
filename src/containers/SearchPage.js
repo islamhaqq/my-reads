@@ -12,7 +12,15 @@ class SearchPage extends Component {
   state = {};
 
   render() {
-    return <SearchBar />;
+    return (
+      <div className="search-books">
+        <SearchBar />
+
+        <div className="search-books-results">
+          <ol className="books-grid" />
+        </div>
+      </div>
+    );
   }
 }
 
