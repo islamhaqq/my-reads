@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 /**
  * An input box that lets users search for books to add to their bookshelf.
@@ -16,16 +17,27 @@ const SearchBar = props => (
 
     {/* Search bar input field. */}
     <div className="search-books-input-wrapper">
-      {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
-      <input type="text" placeholder="Search by title or author" />
+      <input
+        onChange={props.onQuery}
+        placeholder="Search by title or author"
+        type="text"
+      />
     </div>
   </div>
 );
+
+/**
+ * Validation of the props that this component accepts.
+ * @type {Object}
+ */
+SearchBar.propTypes = {
+  /**
+   * This component accepts a callback function called "onQuery" that will be
+   * used by the parent component to receive the native DOM event emitted when
+   * user types in the search bar's input field.
+   * @type {Function}
+   */
+  onQuery: PropTypes.func.isRequired,
+};
 
 export default SearchBar;

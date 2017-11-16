@@ -9,13 +9,34 @@ import SearchBar from '../components/SearchBar';
  * @extends Component
  */
 class SearchPage extends Component {
-  state = {};
+  state = {
+    /**
+     * What the user has typed in the search bar to search for books to add.
+     * @type {String}
+     */
+    searchQuery: '',
+  };
+
+  /**
+   * Uses the passed native DOM event from the search bar to update the search
+   * query, which will in turn update search results.
+   * @method updateSearchQuery
+   * @param  {Object} event - Native DOM event.
+   * @return {Void}
+   */
+  updateSearchQuery = event => {
+    this.setState({
+      searchQuery: event.target.value,
+    });
+  };
 
   render() {
     return (
       <div className="search-books">
-        <SearchBar />
+        {/* Search bar component which updates search query. */}
+        <SearchBar onQuery={this.updateSearchQuery} />
 
+        {/* The search results in accordance to the search query. */}
         <div className="search-books-results">
           <ol className="books-grid" />
         </div>
