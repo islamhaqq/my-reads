@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 
 import SearchBar from '../components/SearchBar';
+import BooksGrid from '../components/BooksGrid';
 import { search } from '../lib/services/booksAPI';
 
 /**
@@ -16,8 +18,13 @@ class SearchPage extends Component {
      * @type {String}
      */
     searchQuery: '',
-    searchResults: null,
+    searchResults: [],
   };
+
+  componentDidMount() {
+    // debounce the AJAX call
+    _.debounce(this.getSearchResults, 10000);
+  }
 
   /**
    * Uses the passed native DOM event from the search bar to update the search
@@ -27,12 +34,20 @@ class SearchPage extends Component {
    * @return {Void}
    */
   updateSearchQuery = async event => {
-    this.setState({
+    await this.setState({
       searchQuery: event.target.value,
     });
 
+    // prevent unneccessary API calls when user isn't searching anything
+    if (!this.state.searchQuery.length) {
+      this.setState({
+        searchResults: [],
+      });
+      return;
+    }
+
     // fetch the books according to the user's query
-    await this.getSearchResults();
+    this.getSearchResults();
   };
 
   /**
@@ -41,25 +56,32 @@ class SearchPage extends Component {
    * @return {Void)
    */
   getSearchResults = async () => {
-    // make AJAX call to the API
-    const results = await search(this.state.searchQuery, 10);
+    await setTimeout(async () => {
+      try {
+        // make AJAX call to the API
+        let results = await search(this.state.searchQuery, 10);
 
-    // update the state to reflect the results
-    this.setState({
-      searchResults: results,
-    });
+        // if (!results) results = [];
+
+        // update the state to reflect the results
+        this.setState({
+          searchResults: results,
+        });
+      } catch (error) {
+        throw new Error(error);
+      }
+    }, 1000);
   };
 
   render() {
+    console.log('rerender');
     return (
       <div className="search-books">
         {/* Search bar component which updates search query. */}
         <SearchBar onQuery={this.updateSearchQuery} />
 
         {/* The search results in accordance to the search query. */}
-        <div className="search-books-results">
-          <ol className="books-grid" />
-        </div>
+        <BooksGrid books={this.state.searchResults} />
       </div>
     );
   }
