@@ -41,16 +41,25 @@ class MyBooksPage extends Component {
 
     // update state with all the user's books, distilled from unused data that
     // will take up extra memory
+    const allBooksDistilled = {
+      currentlyReading: [],
+      wantToRead: [],
+      read: [],
+    };
     allBooks.map(book => {
-      const { shelf, title, authors, imageLinks } = book;
+      const { title, authors, imageLinks } = book;
 
-      this.setState(currentState => {
-        currentState[book.shelf].push({
-          title,
-          authors,
-          coverImageSource: imageLinks.thumbnail,
-        });
+      allBooksDistilled[book.shelf].push({
+        title,
+        authors,
+        coverImageSource: imageLinks.thumbnail,
       });
+    });
+
+    this.setState({
+      currentlyReading: allBooksDistilled.currentlyReading,
+      wantToRead: allBooksDistilled.wantToRead,
+      read: allBooksDistilled.read,
     });
 
     // indicate all essential-data promises are resolved
