@@ -59,8 +59,9 @@ class SearchPage extends Component {
     try {
       // make AJAX call to the API
       let results = await search(this.state.searchQuery, 10);
-
-      // if (!results) results = [];
+      // handle cases when API responds with an "empty query" object. Objects
+      // shouldn't be stored in searchResults since its type Array
+      if (results.constructor !== Array) results = [];
 
       // update the state to reflect the results
       this.setState({
