@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 /**
  * An input box that lets users search for books to add to their bookshelf.
@@ -9,12 +10,9 @@ import React from 'react';
 const SearchBar = props => (
   <div className="search-books-bar">
     {/* Back button that navigates user back to bookshelf page. */}
-    <a
-      className="close-search"
-      onClick={() => this.setState({ showSearchPage: false })}
-    >
+    <Link to="/search" className="close-search">
       Close
-    </a>
+    </Link>
 
     {/* Search bar input field. */}
     <div className="search-books-input-wrapper">
