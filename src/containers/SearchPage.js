@@ -35,7 +35,7 @@ class SearchPage extends Component {
    */
   updateSearchQuery = async event => {
     await this.setState({
-      searchQuery: event.target.value,
+      searchQuery: event.target.value.trim(),
     });
 
     // prevent unneccessary API calls when user isn't searching anything
