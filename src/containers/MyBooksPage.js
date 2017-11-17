@@ -68,12 +68,21 @@ class MyBooksPage extends Component {
     this.setState({ isLoading: false });
   }
 
+  /**
+   * Move a book to a specified shelf.
+   * @method moveBookToShelf
+   * @param  {Object} book - The book to move.
+   * @param  {String} shelf -  The shelf to move the book to.
+   * @return {Void}
+   */
   moveBookToShelf = async (book, shelf) => {
     console.log('moveBookToShelf', 'book', 'shelf', book, shelf);
+    // make the HTTP request
     await update(book, shelf);
   };
 
   render() {
+    // indicate user the app is still loading all the books
     if (this.state.isLoading) return <h1>Loading...</h1>;
 
     return (
