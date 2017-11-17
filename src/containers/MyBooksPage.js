@@ -47,9 +47,10 @@ class MyBooksPage extends Component {
       read: [],
     };
     allBooks.map(book => {
-      const { title, authors, imageLinks } = book;
+      const { id, title, authors, imageLinks } = book;
 
       allBooksDistilled[book.shelf].push({
+        id,
         title,
         authors,
         coverImageSource: imageLinks.thumbnail,
