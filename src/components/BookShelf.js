@@ -18,7 +18,7 @@ const BookShelf = props => (
     <div className="bookshelf-books">
       <ol className="books-grid">
         {props.books.map(book => (
-          <li key={book.title}>
+          <li key={book.id}>
             <Book
               coverImageSource={book.coverImageSource}
               title={book.title}
