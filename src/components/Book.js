@@ -22,7 +22,7 @@ const Book = props => (
 
       {/* Book actions. */}
       <div className="book-shelf-changer">
-        <select>
+        <select onChange={event => props.onBookAction(event.target.value)}>
           <option value="none" disabled>
             Move to...
           </option>

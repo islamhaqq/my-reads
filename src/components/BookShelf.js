@@ -20,6 +20,7 @@ const BookShelf = props => (
         {props.books.map(book => (
           <li key={book.id}>
             <Book
+              onBookAction={shelf => props.onBookAction(book, shelf)}
               coverImageSource={book.coverImageSource}
               title={book.title}
               author={book.authors[0]}

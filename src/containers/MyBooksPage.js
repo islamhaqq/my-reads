@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Header from '../components/Header';
 import BookShelf from '../components/BookShelf';
-import { getAll } from '../lib/services/booksAPI';
+import { getAll, update } from '../lib/services/booksAPI';
 
 /**
  * A top-level stateful component that serves as the home page of the app.
@@ -39,6 +39,7 @@ class MyBooksPage extends Component {
     // fetch all books from API
     const allBooks = await getAll();
 
+    // TODO: abstract this away as a helper used in SearchPage as well
     // update state with all the user's books, distilled from unused data that
     // will take up extra memory
     const allBooksDistilled = {
@@ -67,6 +68,11 @@ class MyBooksPage extends Component {
     this.setState({ isLoading: false });
   }
 
+  moveBookToShelf = async (book, shelf) => {
+    console.log('moveBookToShelf', 'book', 'shelf', book, shelf);
+    await update(book, shelf);
+  };
+
   render() {
     if (this.state.isLoading) return <h1>Loading...</h1>;
 
@@ -81,14 +87,23 @@ class MyBooksPage extends Component {
             {/* "Currently Reading" shelf. */}
             <BookShelf
               books={this.state.currentlyReading}
+              onBookAction={this.moveBookToShelf}
               title="Currently Reading"
             />
 
             {/* "Want to Read" shelf. */}
-            <BookShelf books={this.state.wantToRead} title="Want to Read" />
+            <BookShelf
+              books={this.state.wantToRead}
+              onBookAction={this.moveBookToShelf}
+              title="Want to Read"
+            />
 
             {/* "Read" shelf. */}
-            <BookShelf books={this.state.read} title="Read" />
+            <BookShelf
+              books={this.state.read}
+              onBookAction={this.moveBookToShelf}
+              title="Read"
+            />
           </div>
         </div>
 
