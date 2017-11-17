@@ -21,11 +21,6 @@ class SearchPage extends Component {
     searchResults: [],
   };
 
-  componentDidMount() {
-    // optimization: limit AJAX calls as much as possible when user is querying
-    _.debounce(this.getSearchResults, 1000);
-  }
-
   /**
    * Uses the passed native DOM event from the search bar to update the search
    * query, which will in turn update search results.
@@ -34,6 +29,7 @@ class SearchPage extends Component {
    * @return {Void}
    */
   updateSearchQuery = async event => {
+    // make sure state is updated before HTTP request
     await this.setState({
       searchQuery: event.target.value.trim(),
     });
@@ -47,7 +43,7 @@ class SearchPage extends Component {
     }
 
     // fetch the books according to the user's query
-    this.getSearchResults();
+    await this.getSearchResults();
   };
 
   /**
@@ -55,7 +51,7 @@ class SearchPage extends Component {
    * @method getSearchResults
    * @return {Void)
    */
-  getSearchResults = async () => {
+  getSearchResults = _.debounce(async () => {
     try {
       // make AJAX call to the API
       let results = await search(this.state.searchQuery, 10);
@@ -70,7 +66,7 @@ class SearchPage extends Component {
     } catch (error) {
       throw new Error(error);
     }
-  };
+  }, 1000);
 
   render() {
     console.log('rerender');
