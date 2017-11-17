@@ -34,25 +34,27 @@ class SearchPage extends Component {
       searchQuery: event.target.value.trim(),
     });
 
-    // prevent unneccessary API calls when user isn't searching anything
-    if (!this.state.searchQuery.length) {
-      this.setState({
-        searchResults: [],
-      });
-      return;
-    }
-
     // fetch the books according to the user's query
     await this.getSearchResults();
   };
 
   /**
-   * Fetches the books matching the user's search query.
+   * Fetches the books matching the user's search query. Debounced 1000ms to
+   * prevent unneccessary API calls.
    * @method getSearchResults
    * @return {Void)
    */
   getSearchResults = _.debounce(async () => {
     try {
+      // prevent unneccessary API calls when user isn't searching anything
+      if (!this.state.searchQuery.length) {
+        // assume no search results if search input is empty
+        await this.setState({
+          searchResults: [],
+        });
+        return;
+      }
+
       // make AJAX call to the API
       let results = await search(this.state.searchQuery, 10);
       // handle cases when API responds with an "empty query" object. Objects
