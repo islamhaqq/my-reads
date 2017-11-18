@@ -121,7 +121,16 @@ class App extends Component {
         {/* SearchPage allows user to search & add books to their bookshelf. */}
         <Route
           path="/search"
-          render={() => <SearchPage onBookAction={this.moveBookToShelf} />}
+          render={() => (
+            <SearchPage
+              bookshelf={[
+                ...this.state.currentlyReading,
+                ...this.state.wantToRead,
+                ...this.state.read,
+              ]}
+              onBookAction={this.moveBookToShelf}
+            />
+          )}
         />
       </div>
     );

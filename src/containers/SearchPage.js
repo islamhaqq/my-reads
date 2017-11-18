@@ -63,13 +63,42 @@ class SearchPage extends Component {
       if (results.constructor !== Array) results = [];
 
       // update the state to reflect the results
-      this.setState({
+      await this.setState({
         searchResults: results,
       });
+
+      // set corresponding shelf to every book in the search results
+      this.setShelf();
     } catch (error) {
       throw new Error(error);
     }
   }, 1000);
+
+  /**
+   * Compares the books in the user's bookshelf with the books in the search
+   * results and gives each search result book a shelf accordingly. Maintains
+   * state for each book and which shelf it belongs in.
+   * @method setShelf
+   */
+  setShelf() {
+    // TODO: optimize this loop. Perhaps memoize or use a for loop.
+    this.props.bookshelf.map(bookshelfBook => {
+      this.state.searchResults.map(resultBook => {
+        // match search result books to bookshelf books and set appropriate
+        // shelf
+        if (resultBook.id === bookshelfBook.id) {
+          resultBook.shelf = bookshelfBook.shelf;
+          return resultBook;
+        }
+
+        // assume no shelf for all books
+        if (!resultBook.shelf) {
+          resultBook.shelf = 'none';
+          return resultBook;
+        }
+      });
+    });
+  }
 
   render() {
     console.log('rerender');
