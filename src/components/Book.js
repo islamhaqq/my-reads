@@ -22,7 +22,10 @@ const Book = props => (
 
       {/* Book actions. */}
       <div className="book-shelf-changer">
-        <select onChange={event => props.onBookAction(event.target.value)}>
+        <select
+          onChange={event => props.onBookAction(event.target.value)}
+          value={props.shelf}
+        >
           <option value="none" disabled>
             Move to...
           </option>
@@ -60,6 +63,11 @@ Book.propTypes = {
    * @type {String}
    */
   author: PropTypes.string.isRequired,
+  /**
+   * The shelf the book is currently located in.
+   * @type {String}
+   */
+  shelf: PropTypes.string.isRequired,
 };
 
 export default Book;

@@ -48,10 +48,11 @@ class MyBooksPage extends Component {
       read: [],
     };
     allBooks.map(book => {
-      const { id, title, authors, imageLinks } = book;
+      const { id, shelf, title, authors, imageLinks } = book;
 
       allBooksDistilled[book.shelf].push({
         id,
+        shelf,
         title,
         authors,
         coverImageSource: imageLinks.thumbnail,
@@ -69,15 +70,29 @@ class MyBooksPage extends Component {
   }
 
   /**
-   * Move a book to a specified shelf.
+   * Move a book to a specified shelf, both locally and remotely.
    * @method moveBookToShelf
    * @param  {Object} book - The book to move.
    * @param  {String} shelf -  The shelf to move the book to.
    * @return {Void}
    */
   moveBookToShelf = async (book, shelf) => {
-    console.log('moveBookToShelf', 'book', 'shelf', book, shelf);
-    // make the HTTP request
+    // move the book locally before doing it remotely
+    await this.setState(currentState => {
+      // remove book from current shelf
+      const index = currentState[book.shelf].indexOf(book);
+      currentState[book.shelf].splice(index, 1);
+
+      // move book to specified shelf
+      if (shelf !== 'none') currentState[shelf].push(book);
+
+      return {
+        [book.shelf]: currentState[book.shelf],
+        [shelf]: currentState[shelf],
+      };
+    });
+
+    // move the book remotely and make the HTTP request
     await update(book, shelf);
   };
 

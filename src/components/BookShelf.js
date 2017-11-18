@@ -24,6 +24,7 @@ const BookShelf = props => (
               coverImageSource={book.coverImageSource}
               title={book.title}
               author={book.authors[0]}
+              shelf={book.shelf}
             />
           </li>
         ))}
