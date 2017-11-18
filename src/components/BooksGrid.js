@@ -22,6 +22,7 @@ const BooksGrid = ({ books, onBookAction }) => {
                 coverImageSource={
                   book.imageLinks ? book.imageLinks.thumbnail : ''
                 }
+                shelf={book.shelf}
                 title={book.title}
                 author={book.authors ? book.authors[0] : ''}
               />

@@ -64,7 +64,8 @@ Book.propTypes = {
    */
   author: PropTypes.string.isRequired,
   /**
-   * The shelf the book is currently located in.
+   * The shelf the book is currently located in. Required to indicate in the
+   * select dropdown.
    * @type {String}
    */
   shelf: PropTypes.string.isRequired,
