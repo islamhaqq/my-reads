@@ -9,8 +9,6 @@ import Book from './Book';
  * @param  {Array} books - The books to display.
  */
 const BooksGrid = ({ books, onBookAction }) => {
-  console.log(books);
-
   return (
     <div className="search-books-results">
       <ol className="books-grid">
