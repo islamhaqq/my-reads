@@ -68,6 +68,12 @@ Book.propTypes = {
    * @type {String}
    */
   shelf: PropTypes.string.isRequired,
+  /**
+   * A callback passed to handle when user seeks to change the shelf of the
+   * book.
+   * @type {Function}
+   */
+  onBookAction: PropTypes.func.isRequired,
 };
 
 export default Book;
