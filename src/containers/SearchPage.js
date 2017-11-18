@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 
 import SearchBar from '../components/SearchBar';
 import BooksGrid from '../components/BooksGrid';
@@ -78,10 +79,21 @@ class SearchPage extends Component {
         <SearchBar onQuery={this.updateSearchQuery} />
 
         {/* The search results in accordance to the search query. */}
-        <BooksGrid books={this.state.searchResults} />
+        <BooksGrid
+          books={this.state.searchResults}
+          onBookAction={this.props.onBookAction}
+        />
       </div>
     );
   }
 }
+
+SearchPage.propTypes = {
+  /**
+   * A callback passed that will move the book to a specified shelf.
+   * @type {Function}
+   */
+  onBookAction: PropTypes.func.isRequired,
+};
 
 export default SearchPage;

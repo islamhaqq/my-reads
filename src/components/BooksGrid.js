@@ -8,7 +8,7 @@ import Book from './Book';
  * @method BooksGrid
  * @param  {Array} books - The books to display.
  */
-const BooksGrid = ({ books }) => {
+const BooksGrid = ({ books, onBookAction }) => {
   console.log(books);
 
   return (
@@ -18,6 +18,7 @@ const BooksGrid = ({ books }) => {
           books.map(book => (
             <li key={book.id}>
               <Book
+                onBookAction={onBookAction}
                 coverImageSource={
                   book.imageLinks ? book.imageLinks.thumbnail : ''
                 }
@@ -40,6 +41,12 @@ BooksGrid.propTypes = {
    * @type {Array}
    */
   books: PropTypes.array.isRequired,
+  /**
+   * A callback passed that will perform some form of action given the book
+   * the action is taken on and the shelf the user wants to move the book to.
+   * @type {Function}
+   */
+  onBookAction: PropTypes.func.isRequired,
 };
 
 export default BooksGrid;
