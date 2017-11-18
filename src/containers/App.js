@@ -78,24 +78,33 @@ class App extends Component {
    * @param  {String} shelf -  The shelf to move the book to.
    * @return {Void}
    */
-  moveBookToShelf = async (book, shelf) => {
+  moveBookToShelf = async (book, shelfToMoveTo) => {
+    console.log(book, shelfToMoveTo);
     // move the book locally before doing it remotely
     await this.setState(currentState => {
-      // remove book from current shelf
-      const index = currentState[book.shelf].indexOf(book);
-      currentState[book.shelf].splice(index, 1);
+      // handle old books
+      if (book.shelf !== 'none') {
+        // remove book from current shelf
+        const index = currentState[book.shelf].indexOf(book);
+        currentState[book.shelf].splice(index, 1);
+      }
 
-      // move book to specified shelf
-      if (shelf !== 'none') currentState[shelf].push(book);
+      if (shelfToMoveTo !== 'none') {
+        // move book to specified shelf
+        currentState[shelfToMoveTo].push(book);
+      }
+
+      // update shelf
+      book.shelf = shelfToMoveTo;
 
       return {
         [book.shelf]: currentState[book.shelf],
-        [shelf]: currentState[shelf],
+        [shelfToMoveTo]: currentState[shelfToMoveTo],
       };
     });
 
     // move the book remotely and make the HTTP request
-    await update(book, shelf);
+    await update(book, shelfToMoveTo);
   };
 
   render() {
