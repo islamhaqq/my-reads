@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 import MyBooksPage from './MyBooksPage';
 import SearchPage from './SearchPage';
+import { getAll, update } from '../lib/services/booksAPI';
 
 import '../assets/styles/App.css';
 
@@ -11,14 +12,117 @@ import '../assets/styles/App.css';
  * @extends Component
  */
 class App extends Component {
+  state = {
+    /**
+     * All the books in the user's book shelf that he is currently reading.
+     * @type {Array}
+     */
+    currentlyReading: [],
+    /**
+     * All the books in the user's book shelf that he wants to read reading.
+     * @type {Array}
+     */
+    wantToRead: [],
+    /**
+     * All the books in the user's book shelf that he has already read.
+     * @type {Array}
+     */
+    read: [],
+    /**
+     * Whether AJAX calls are being made to the API to fetch data.
+     * @type {Boolean}
+     */
+    isLoading: true,
+  };
+
+  async componentDidMount() {
+    // fetch all books from API
+    const allBooks = await getAll();
+
+    // TODO: abstract this away as a helper used in SearchPage as well
+    // update state with all the user's books, distilled from unused data that
+    // will take up extra memory
+    const allBooksDistilled = {
+      currentlyReading: [],
+      wantToRead: [],
+      read: [],
+    };
+    allBooks.map(book => {
+      const { id, shelf, title, authors, imageLinks } = book;
+
+      allBooksDistilled[book.shelf].push({
+        id,
+        shelf,
+        title,
+        authors,
+        coverImageSource: imageLinks.thumbnail,
+      });
+    });
+
+    this.setState({
+      currentlyReading: allBooksDistilled.currentlyReading,
+      wantToRead: allBooksDistilled.wantToRead,
+      read: allBooksDistilled.read,
+    });
+
+    // indicate all essential-data promises are resolved
+    this.setState({ isLoading: false });
+  }
+
+  // TODO: fix issue where sometimes the book won't locally be moved but moved
+  // remotely. Fix responsiveness of the local moving and deleting.
+  /**
+   * Move a book to a specified shelf, both locally and remotely.
+   * @method moveBookToShelf
+   * @param  {Object} book - The book to move.
+   * @param  {String} shelf -  The shelf to move the book to.
+   * @return {Void}
+   */
+  moveBookToShelf = async (book, shelf) => {
+    // move the book locally before doing it remotely
+    await this.setState(currentState => {
+      // remove book from current shelf
+      const index = currentState[book.shelf].indexOf(book);
+      currentState[book.shelf].splice(index, 1);
+
+      // move book to specified shelf
+      if (shelf !== 'none') currentState[shelf].push(book);
+
+      return {
+        [book.shelf]: currentState[book.shelf],
+        [shelf]: currentState[shelf],
+      };
+    });
+
+    // move the book remotely and make the HTTP request
+    await update(book, shelf);
+  };
+
   render() {
+    // indicate user the app is still loading all the books
+    if (this.state.isLoading) return <h1>Loading...</h1>;
+
     return (
       <div className="App">
         {/* MyBooksPage will serve as the home page. */}
-        <Route path="/" component={MyBooksPage} exact />
+        <Route
+          path="/"
+          render={() => (
+            <MyBooksPage
+              currentlyReading={this.state.currentlyReading}
+              wantToRead={this.state.wantToRead}
+              read={this.state.read}
+              onBookAction={this.moveBookToShelf}
+            />
+          )}
+          exact
+        />
 
         {/* SearchPage allows user to search & add books to their bookshelf. */}
-        <Route path="/search" component={SearchPage} />
+        <Route
+          path="/search"
+          render={() => <SearchPage onBookAction={this.moveBookToShelf} />}
+        />
       </div>
     );
   }
