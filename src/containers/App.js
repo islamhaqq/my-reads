@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import MyBooksPage from './MyBooksPage';
+import MyBooksPage from '../components/MyBooksPage';
 import SearchPage from './SearchPage';
 import { getAll, update } from '../lib/services/booksAPI';
 

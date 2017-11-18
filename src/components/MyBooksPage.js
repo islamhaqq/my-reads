@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Header from '../components/Header';
-import BookShelf from '../components/BookShelf';
+import Header from './Header';
+import BookShelf from './BookShelf';
 
 /**
  * A top-level stateful component that serves as the home page of the app.
