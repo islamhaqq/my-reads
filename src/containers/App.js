@@ -55,7 +55,7 @@ class App extends Component {
         shelf,
         title,
         authors,
-        coverImageSource: imageLinks.thumbnail,
+        imageLinks,
       });
     });
 

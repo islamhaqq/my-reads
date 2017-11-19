@@ -16,7 +16,7 @@ const Book = props => (
         style={{
           width: 128,
           height: 193,
-          backgroundImage: `url(${props.coverImageSource})`,
+          backgroundImage: `url(${props.imageLinks})`,
         }}
       />
 
@@ -52,7 +52,7 @@ Book.propTypes = {
    * The image link of the book's cover.
    * @type {String}
    */
-  coverImageSource: PropTypes.string.isRequired,
+  imageLinks: PropTypes.string.isRequired,
   /**
    * The title of the book.
    * @type {String}

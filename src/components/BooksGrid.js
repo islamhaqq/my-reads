@@ -17,7 +17,7 @@ const BooksGrid = ({ books, onBookAction }) => {
             <li key={book.id}>
               <Book
                 onBookAction={shelf => onBookAction(book, shelf)}
-                coverImageSource={
+                imageLinks={
                   book.imageLinks ? book.imageLinks.thumbnail : ''
                 }
                 // if there's no shelf associated, assume it's not in bookshelf

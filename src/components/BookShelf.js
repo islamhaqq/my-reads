@@ -21,7 +21,7 @@ const BookShelf = props => (
           <li key={book.id}>
             <Book
               onBookAction={shelf => props.onBookAction(book, shelf)}
-              coverImageSource={book.coverImageSource}
+              imageLinks={book.imageLinks.thumbnail}
               title={book.title}
               author={book.authors[0]}
               shelf={book.shelf}
