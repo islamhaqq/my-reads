@@ -20,6 +20,7 @@ class SearchPage extends Component {
      */
     searchQuery: '',
     searchResults: [],
+    hasQueried: false,
   };
 
   /**
@@ -33,6 +34,7 @@ class SearchPage extends Component {
     // make sure state is updated before HTTP request
     await this.setState({
       searchQuery: event.target.value.trim(),
+      hasQueried: false,
     });
 
     // fetch the books according to the user's query
@@ -97,6 +99,8 @@ class SearchPage extends Component {
 
       return resultBook;
     });
+
+    this.setState({ hasQueried: true });
   }
 
   render() {
@@ -106,10 +110,12 @@ class SearchPage extends Component {
         <SearchBar onQuery={this.updateSearchQuery} />
 
         {/* The search results in accordance to the search query. */}
-        <BooksGrid
-          books={this.state.searchResults}
-          onBookAction={this.props.onBookAction}
-        />
+        {this.state.hasQueried ? (
+          <BooksGrid
+            books={this.state.searchResults}
+            onBookAction={this.props.onBookAction}
+          />
+        ) : null}
       </div>
     );
   }

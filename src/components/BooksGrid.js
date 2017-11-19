@@ -16,12 +16,9 @@ const BooksGrid = ({ books, onBookAction }) => {
           books.map(book => (
             <li key={book.id}>
               <Book
-                onBookAction={shelf => onBookAction(book, shelf)}
-                imageLinks={
-                  book.imageLinks ? book.imageLinks.thumbnail : ''
-                }
-                // if there's no shelf associated, assume it's not in bookshelf
-                shelf={book.shelf ? book.shelf : 'none'}
+                onBookAction={newShelf => onBookAction(book, newShelf)}
+                imageLinks={book.imageLinks ? book.imageLinks.thumbnail : ''}
+                shelf={book.shelf}
                 title={book.title}
                 author={book.authors ? book.authors[0] : ''}
               />
