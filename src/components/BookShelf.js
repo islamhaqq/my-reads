@@ -23,7 +23,7 @@ const BookShelf = props => (
               onBookAction={shelf => props.onBookAction(book, shelf)}
               imageLinks={book.imageLinks.thumbnail}
               title={book.title}
-              author={book.authors[0]}
+              author={book.authors ? book.authors[0] : ''}
               shelf={book.shelf}
             />
           </li>
