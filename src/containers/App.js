@@ -14,24 +14,10 @@ import '../assets/styles/App.css';
 class App extends Component {
   state = {
     /**
-     * All the books in the user's book shelf that he is currently reading.
+     * All the books in the user's bookshelf.
      * @type {Array}
      */
-    currentlyReading: [],
-    /**
-     * All the books in the user's book shelf that he wants to read reading.
-     * @type {Array}
-     */
-    wantToRead: [],
-    /**
-     * All the books in the user's book shelf that he has already read.
-     * @type {Array}
-     */
-    read: [],
-    /**
-     * Whether AJAX calls are being made to the API to fetch data.
-     * @type {Boolean}
-     */
+    books: [],
     isLoading: true,
   };
 
@@ -39,18 +25,14 @@ class App extends Component {
     // fetch all books from API
     const allBooks = await getAll();
 
-    // TODO: abstract this away as a helper used in SearchPage as well
     // update state with all the user's books, distilled from unused data that
     // will take up extra memory
-    const allBooksDistilled = {
-      currentlyReading: [],
-      wantToRead: [],
-      read: [],
-    };
+    // TODO: abstract this away as a helper used in SearchPage as well
+    const allBooksDistilled = [];
     allBooks.map(book => {
       const { id, shelf, title, authors, imageLinks } = book;
 
-      allBooksDistilled[book.shelf].push({
+      allBooksDistilled.push({
         id,
         shelf,
         title,
@@ -60,47 +42,49 @@ class App extends Component {
     });
 
     this.setState({
-      currentlyReading: allBooksDistilled.currentlyReading,
-      wantToRead: allBooksDistilled.wantToRead,
-      read: allBooksDistilled.read,
+      books: allBooksDistilled,
       // indicate all essential-data promises are resolved
       isLoading: false,
     });
   }
 
+  getAllBooksFromShelf(shelf) {
+    return this.state.books.filter(book => book.shelf === shelf);
+  }
+
   /**
    * Move a book to a specified shelf, both locally and remotely.
    * @method moveBookToShelf
-   * @param  {Object} book - The book to move.
-   * @param  {String} shelf -  The shelf to move the book to.
+   * @param  {Object} bookToMove - The book to move.
+   * @param  {String} shelfToMoveTo - The shelf to move the book to.
    * @return {Void}
    */
-  moveBookToShelf = async (book, shelfToMoveTo) => {
+  moveBookToShelf = async (bookToMove, shelfToMoveTo) => {
+    // no point in moving a book into its same shelf
+    if (bookToMove.shelf === shelfToMoveTo) return;
+
     // move the book locally before doing it remotely
     await this.setState(currentState => {
-      // handle old books
-      if (book.shelf !== 'none') {
-        // remove book from current shelf
-        const index = currentState[book.shelf].indexOf(book);
-        currentState[book.shelf].splice(index, 1);
+      // handle getting rid of book from bookshelf
+      if (shelfToMoveTo === 'none') {
+        const index = currentState.books.indexOf(bookToMove);
+        currentState.books.splice(index, 1);
+      } else if (bookToMove.shelf === 'none') {
+        // handle moving in new books from search into the bookshelf
+        bookToMove.shelf = shelfToMoveTo;
+        currentState.books.push(bookToMove);
+      } else {
+        // handle switching books from shelves within the bookshelf
+        currentState.books.find(
+          ownedBook => ownedBook.id === bookToMove.id,
+        ).shelf = shelfToMoveTo;
       }
 
-      if (shelfToMoveTo !== 'none') {
-        // move book to specified shelf
-        currentState[shelfToMoveTo].push(book);
-      }
-
-      // update shelf
-      book.shelf = shelfToMoveTo;
-
-      return {
-        [book.shelf]: currentState[book.shelf],
-        [shelfToMoveTo]: currentState[shelfToMoveTo],
-      };
+      return { books: currentState.books };
     });
 
     // move the book remotely and make the HTTP request
-    await update(book, shelfToMoveTo);
+    await update(bookToMove, shelfToMoveTo);
   };
 
   render() {
@@ -114,9 +98,9 @@ class App extends Component {
           path="/"
           render={() => (
             <MyBooksPage
-              currentlyReading={this.state.currentlyReading}
-              wantToRead={this.state.wantToRead}
-              read={this.state.read}
+              currentlyReading={this.getAllBooksFromShelf('currentlyReading')}
+              wantToRead={this.getAllBooksFromShelf('wantToRead')}
+              read={this.getAllBooksFromShelf('read')}
               onBookAction={this.moveBookToShelf}
             />
           )}
@@ -128,11 +112,7 @@ class App extends Component {
           path="/search"
           render={() => (
             <SearchPage
-              bookshelf={[
-                ...this.state.currentlyReading,
-                ...this.state.wantToRead,
-                ...this.state.read,
-              ]}
+              bookshelf={this.state.books}
               onBookAction={this.moveBookToShelf}
             />
           )}
