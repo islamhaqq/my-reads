@@ -24,6 +24,23 @@ class SearchPage extends Component {
   };
 
   /**
+   * Validation for all props passed down into this component.
+   * @type {Object}
+   */
+  static propTypes = {
+    /**
+     * A callback passed that will move the book to a specified shelf.
+     * @type {Function}
+     */
+    onBookAction: PropTypes.func.isRequired,
+    /**
+     * All the books currently in the user's bookshelf in the "My Books" page.
+     * @type {Array}
+     */
+    bookshelf: PropTypes.array.isRequired,
+  };
+
+  /**
    * Uses the passed native DOM event from the search bar to update the search
    * query, which will in turn update search results.
    * @method updateSearchQuery
@@ -120,18 +137,5 @@ class SearchPage extends Component {
     );
   }
 }
-
-SearchPage.propTypes = {
-  /**
-   * A callback passed that will move the book to a specified shelf.
-   * @type {Function}
-   */
-  onBookAction: PropTypes.func.isRequired,
-  /**
-   * All the books currently in the user's bookshelf in the "My Books" page.
-   * @type {Array}
-   */
-  bookshelf: PropTypes.array.isRequired,
-};
 
 export default SearchPage;
