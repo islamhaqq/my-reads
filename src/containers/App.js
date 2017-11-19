@@ -48,6 +48,12 @@ class App extends Component {
     });
   }
 
+  /**
+   * A helper function that simply gets all books in a certain shelf.
+   * @method getAllBooksFromShelf
+   * @param  {String} shelf - The shelf from which to get the contained books.
+   * @return {Array} All the books in a specified shelf.
+   */
   getAllBooksFromShelf(shelf) {
     return this.state.books.filter(book => book.shelf === shelf);
   }
