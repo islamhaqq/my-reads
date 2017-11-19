@@ -77,8 +77,11 @@ class App extends Component {
     await this.setState(currentState => {
       // handle getting rid of book from bookshelf
       if (shelfToMoveTo === 'none') {
-        const index = currentState.books.indexOf(bookToMove);
-        currentState.books.splice(index, 1);
+        const bookToRemove = currentState.books.find(
+          ownedBook => ownedBook.id === bookToMove.id,
+        );
+        const index = currentState.books.indexOf(bookToRemove);
+        if (bookToRemove) currentState.books.splice(index, 1);
       } else if (bookToMove.shelf === 'none') {
         // handle moving in new books from search into the bookshelf
         bookToMove.shelf = shelfToMoveTo;
