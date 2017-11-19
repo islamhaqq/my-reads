@@ -82,26 +82,24 @@ class SearchPage extends Component {
    */
   setShelf() {
     // TODO: optimize this loop. Perhaps memoize or use a for loop.
-    this.props.bookshelf.map(bookshelfBook => {
-      this.state.searchResults.map(resultBook => {
-        // match search result books to bookshelf books and set appropriate
-        // shelf
+    this.state.searchResults.map(resultBook => {
+      // assume all queried books aren't in the user's bookshelf
+      if (!resultBook.shelf) {
+        resultBook.shelf = 'none';
+      }
+
+      // determine if the queried book is already in the bookshelf
+      this.props.bookshelf.map(bookshelfBook => {
         if (resultBook.id === bookshelfBook.id) {
           resultBook.shelf = bookshelfBook.shelf;
-          return resultBook;
-        }
-
-        // assume no shelf for all books
-        if (!resultBook.shelf) {
-          resultBook.shelf = 'none';
-          return resultBook;
         }
       });
+
+      return resultBook;
     });
   }
 
   render() {
-    console.log('rerender');
     return (
       <div className="search-books">
         {/* Search bar component which updates search query. */}
