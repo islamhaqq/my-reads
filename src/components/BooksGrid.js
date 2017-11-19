@@ -16,11 +16,8 @@ const BooksGrid = ({ books, onBookAction }) => {
           books.map(book => (
             <li key={book.id}>
               <Book
+                book={book}
                 onBookAction={newShelf => onBookAction(book, newShelf)}
-                imageLinks={book.imageLinks ? book.imageLinks.thumbnail : ''}
-                shelf={book.shelf}
-                title={book.title}
-                authors={book.authors ? book.authors : []}
               />
             </li>
           ))

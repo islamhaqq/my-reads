@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
  * @method Book
  * @param  {Object} props - A book object and its data (title, author, etc.)
  */
-const Book = props => (
+const Book = ({ book, onBookAction }) => (
   <div className="book">
     {/* Book preview. */}
     <div className="book-top">
@@ -16,15 +16,17 @@ const Book = props => (
         style={{
           width: 128,
           height: 193,
-          backgroundImage: `url(${props.imageLinks})`,
+          backgroundImage: `url(${
+            book.imageLinks ? book.imageLinks.thumbnail : ''
+          })`,
         }}
       />
 
       {/* Book actions. */}
       <div className="book-shelf-changer">
         <select
-          onChange={event => props.onBookAction(event.target.value)}
-          value={props.shelf}
+          onChange={event => onBookAction(event.target.value)}
+          value={book.shelf}
         >
           <option value="none" disabled>
             Move to...
@@ -38,13 +40,15 @@ const Book = props => (
     </div>
 
     {/* Book description. */}
-    <div className="book-title">{props.title}</div>
+    <div className="book-title">{book.title}</div>
     {/* All authors rendered out */}
-    {props.authors.map(author => (
-      <div className="book-authors" key={author}>
-        {author}
-      </div>
-    ))}
+    {book.authors
+      ? book.authors.map(author => (
+          <div className="book-authors" key={author}>
+            {author}
+          </div>
+        ))
+      : null}
   </div>
 );
 
@@ -54,26 +58,10 @@ const Book = props => (
  */
 Book.propTypes = {
   /**
-   * The image link of the book's cover.
-   * @type {String}
+   * The book to display a preview of.
+   * @type {Object}
    */
-  imageLinks: PropTypes.string.isRequired,
-  /**
-   * The title of the book.
-   * @type {String}
-   */
-  title: PropTypes.string.isRequired,
-  /**
-   * The author of the book.
-   * @type {String}
-   */
-  authors: PropTypes.array.isRequired,
-  /**
-   * The shelf the book is currently located in. Required to indicate in the
-   * select dropdown.
-   * @type {String}
-   */
-  shelf: PropTypes.string.isRequired,
+  book: PropTypes.object.isRequired,
   /**
    * A callback passed to handle when user seeks to change the shelf of the
    * book.
