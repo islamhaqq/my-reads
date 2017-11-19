@@ -20,7 +20,7 @@ const BooksGrid = ({ books, onBookAction }) => {
                 imageLinks={book.imageLinks ? book.imageLinks.thumbnail : ''}
                 shelf={book.shelf}
                 title={book.title}
-                author={book.authors ? book.authors[0] : ''}
+                authors={book.authors ? book.authors : []}
               />
             </li>
           ))

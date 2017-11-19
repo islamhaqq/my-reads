@@ -39,7 +39,12 @@ const Book = props => (
 
     {/* Book description. */}
     <div className="book-title">{props.title}</div>
-    <div className="book-authors">{props.author}</div>
+    {/* All authors rendered out */}
+    {props.authors.map(author => (
+      <div className="book-authors" key={author}>
+        {author}
+      </div>
+    ))}
   </div>
 );
 
@@ -62,7 +67,7 @@ Book.propTypes = {
    * The author of the book.
    * @type {String}
    */
-  author: PropTypes.string.isRequired,
+  authors: PropTypes.array.isRequired,
   /**
    * The shelf the book is currently located in. Required to indicate in the
    * select dropdown.
