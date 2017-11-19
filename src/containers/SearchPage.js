@@ -127,6 +127,11 @@ SearchPage.propTypes = {
    * @type {Function}
    */
   onBookAction: PropTypes.func.isRequired,
+  /**
+   * All the books currently in the user's bookshelf in the "My Books" page.
+   * @type {Array}
+   */
+  bookshelf: PropTypes.array.isRequired,
 };
 
 export default SearchPage;

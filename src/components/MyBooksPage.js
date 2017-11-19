@@ -61,6 +61,21 @@ MyBooksPage.propTypes = {
    * @type {Function}
    */
   onBookAction: PropTypes.func.isRequired,
+  /**
+   * All the books in the "currently reading" shelf in the user's bookshelf.
+   * @type {Array}
+   */
+  currentlyReading: PropTypes.array.isRequired,
+  /**
+   * All the books in the "want to read" shelf in the user's bookshelf.
+   * @type {Array}
+   */
+  wantToRead: PropTypes.array.isRequired,
+  /**
+   * All the books in the "read" shelf in the user's bookshelf.
+   * @type {Array}
+   */
+  read: PropTypes.array.isRequired,
 };
 
 export default MyBooksPage;

@@ -68,8 +68,6 @@ class App extends Component {
     });
   }
 
-  // TODO: fix issue where sometimes the book won't locally be moved but moved
-  // remotely. Fix responsiveness of the local moving and deleting.
   /**
    * Move a book to a specified shelf, both locally and remotely.
    * @method moveBookToShelf

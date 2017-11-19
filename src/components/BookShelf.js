@@ -48,6 +48,12 @@ BookShelf.propTypes = {
    * @type {Array}
    */
   books: PropTypes.array.isRequired,
+  /**
+   * A callback that takes in the shelf a user wants to move a book to which is
+   * then taken care of in a parent component.
+   * @type {Function}
+   */
+  onBookAction: PropTypes.func.isRequired,
 };
 
 export default BookShelf;
