@@ -13,6 +13,10 @@ import { search } from '../lib/services/booksAPI';
  * @extends Component
  */
 class SearchPage extends Component {
+  /**
+   * Initial state.
+   * @type {Object}
+   */
   state = {
     /**
      * What the user has typed in the search bar to search for books to add.
