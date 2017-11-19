@@ -18,6 +18,10 @@ class App extends Component {
      * @type {Array}
      */
     books: [],
+    /**
+     * Whether the app is making AJAX requests to the API to fetch data.
+     * @type {Boolean}
+     */
     isLoading: true,
   };
 
