@@ -13,6 +13,9 @@ $ git clone https://github.com/SyedAman/my-reads.git
 $ cd my-reads
 $ yarn && yarn run start
 ```
+
+The development server should now open up in your browser. If not, simply go to <http://localhost:3000>
+
 ## Screenshots
 
 ![image](https://user-images.githubusercontent.com/11065634/32987476-d2cd8620-ccb2-11e7-85d3-98a34bc00b87.png)
