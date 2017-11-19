@@ -78,7 +78,6 @@ class App extends Component {
    * @return {Void}
    */
   moveBookToShelf = async (book, shelfToMoveTo) => {
-    console.log(book, shelfToMoveTo);
     // move the book locally before doing it remotely
     await this.setState(currentState => {
       // handle old books
