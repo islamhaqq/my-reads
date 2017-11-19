@@ -63,10 +63,9 @@ class App extends Component {
       currentlyReading: allBooksDistilled.currentlyReading,
       wantToRead: allBooksDistilled.wantToRead,
       read: allBooksDistilled.read,
+      // indicate all essential-data promises are resolved
+      isLoading: false,
     });
-
-    // indicate all essential-data promises are resolved
-    this.setState({ isLoading: false });
   }
 
   // TODO: fix issue where sometimes the book won't locally be moved but moved
