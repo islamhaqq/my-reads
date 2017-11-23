@@ -4,11 +4,23 @@ A book managing app that lets you search for and then add books to your bookshel
 
 ## How to run
 
+### Docker method
+
+- [ ] Make sure Docker is installed
+
+```sh
+$ docker run -p 3000:3000 my-reads:1.0.1 yarn run start
+```
+
+The development server should now be running at <http://localhost:3000!>
+
+### Traditional method
+
 - [ ] Clone it (<https://github.com/SyedAman/my-reads.git>)
 - [ ] Install `node_modules`
 - [ ] Run the dev server
 
-```shell
+```sh
 $ git clone https://github.com/SyedAman/my-reads.git
 $ cd my-reads
 $ yarn && yarn run start
